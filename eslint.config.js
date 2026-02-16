@@ -4,12 +4,16 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import importHelpers from 'eslint-plugin-import-helpers';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
+    plugins: {
+      'import-helpers': importHelpers,
+    },
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
@@ -25,6 +29,19 @@ export default defineConfig([
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
+      ],
+      'import-helpers/order-imports': [
+        'warn',
+        {
+          newlinesBetween: 'always',
+          groups: [
+            '/^react/',
+            'module',
+            '/^@//',
+            ['parent', 'sibling', 'index'],
+          ],
+          alphabetize: { order: 'asc', ignoreCase: true },
+        },
       ],
     },
   },
