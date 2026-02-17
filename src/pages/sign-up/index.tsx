@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import PasswordInput from '@/components/common/password-input';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
@@ -34,10 +35,8 @@ const SignUp = () => {
 								type='email'
 								placeholder='Digite seu e-mail'
 							/>
-							<Input
-								type='password'
-								placeholder='Digite sua senha'
-							/>
+							<PasswordInput />
+							<PasswordInput placeholder='Digite sua senha novamente' />
 						</CardContent>
 						<CardFooter>
 							<Button className='w-full'>Criar conta</Button>
