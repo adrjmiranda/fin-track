@@ -67,7 +67,7 @@ const SignUp = () => {
 						className='flex max-w-lg flex-1 flex-col gap-3'
 					>
 						<Card className='flex-1'>
-							<CardHeader>
+							<CardHeader className='text-center'>
 								<CardTitle>Crie a sua conta</CardTitle>
 								<CardDescription>Insira os seus dados abaixo</CardDescription>
 							</CardHeader>
