@@ -1,5 +1,4 @@
 import api from '@/config/api';
-import { ACCESS_TOKEN } from '@/constants/AuthStorage';
 import type { UserRegisterType } from '@/types/UserRegisterType';
 
 export const UserService = {
@@ -15,13 +14,7 @@ export const UserService = {
 	},
 
 	async getMe() {
-		const token = localStorage.getItem(ACCESS_TOKEN) ?? '';
-
-		const response = await api.get('/users/me', {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await api.get('/users/me');
 		return response.data;
 	},
 };
