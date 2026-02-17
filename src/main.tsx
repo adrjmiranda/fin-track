@@ -11,40 +11,53 @@ import Home from '@/pages/home';
 import Login from '@/pages/login';
 import SignUp from '@/pages/sign-up';
 
+import AuthGuard from './components/guards/AuthGuard';
+import GuestGuard from './components/guards/GuestGuard';
 import NotFound from './pages/not-found';
+import AuthProvider from './providers/AuthProvider';
+import UserProvider from './providers/UserProvider';
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<BrowserRouter>
-				<Routes>
-					<Route
-						path='/'
-						element={<App />}
-					>
-						<Route
-							index
-							element={<Home />}
-						/>
-						<Route
-							path='login'
-							element={<Login />}
-						/>
-						<Route
-							path='sign-up'
-							element={<SignUp />}
-						/>
+			<AuthProvider>
+				<UserProvider>
+					<BrowserRouter>
+						<Routes>
+							<Route
+								path='/'
+								element={<App />}
+							>
+								<Route element={<AuthGuard />}>
+									<Route
+										index
+										element={<Home />}
+									/>
+								</Route>
 
-						{/* Not Found */}
-						<Route
-							path='*'
-							element={<NotFound />}
-						/>
-					</Route>
-				</Routes>
-			</BrowserRouter>
+								<Route element={<GuestGuard />}>
+									<Route
+										path='login'
+										element={<Login />}
+									/>
+									<Route
+										path='sign-up'
+										element={<SignUp />}
+									/>
+								</Route>
+
+								{/* Not Found */}
+								<Route
+									path='*'
+									element={<NotFound />}
+								/>
+							</Route>
+						</Routes>
+					</BrowserRouter>
+				</UserProvider>
+			</AuthProvider>
 		</QueryClientProvider>
 	</StrictMode>,
 );

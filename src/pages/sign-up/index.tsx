@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import PasswordInput from '@/components/common/password-input';
@@ -24,6 +25,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAuth } from '@/hooks/useAuth';
 
 const signUpSchema = z
 	.object({
@@ -42,6 +44,10 @@ const signUpSchema = z
 	});
 
 const SignUp = () => {
+	const { registerUser } = useAuth();
+
+	const navigate = useNavigate();
+
 	const form = useForm<z.infer<typeof signUpSchema>>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
@@ -54,8 +60,21 @@ const SignUp = () => {
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-		console.log(values);
+	const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+		try {
+			await registerUser({
+				firstName: values.firstName,
+				lastName: values.lastName,
+				email: values.email,
+				password: values.password,
+			});
+
+			toast.success('Usuário registrado.');
+
+			navigate('/');
+		} catch {
+			toast.error('Falha. Usuário não registrado.');
+		}
 	};
 
 	return (
