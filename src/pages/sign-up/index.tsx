@@ -15,6 +15,14 @@ import {
 	CardTitle,
 } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 
 const signUpSchema = z
@@ -33,15 +41,8 @@ const signUpSchema = z
 		path: ['confirmPassword'],
 	});
 
-type SignUpFormData = z.infer<typeof signUpSchema>;
-
 const SignUp = () => {
-	const {
-		register,
-		handleSubmit,
-		setValue,
-		formState: { errors, isSubmitting },
-	} = useForm<SignUpFormData>({
+	const form = useForm<z.infer<typeof signUpSchema>>({
 		resolver: zodResolver(signUpSchema),
 		defaultValues: {
 			firstName: '',
@@ -49,133 +50,161 @@ const SignUp = () => {
 			email: '',
 			password: '',
 			confirmPassword: '',
+			terms: false,
 		},
 	});
 
-	const onSubmit = (values: SignUpFormData) => {
-		console.log('Dados do formulário: ', values);
+	const onSubmit = (values: z.infer<typeof signUpSchema>) => {
+		console.log(values);
 	};
 
 	return (
 		<main>
 			<div className='flex min-h-screen w-screen items-center justify-center'>
-				<form
-					onSubmit={handleSubmit(onSubmit)}
-					className='flex max-w-lg flex-1 flex-col gap-3'
-				>
-					<Card className='flex-1'>
-						<CardHeader>
-							<CardTitle>Crie a sua conta</CardTitle>
-							<CardDescription>Insira os seus dados abaixo</CardDescription>
-						</CardHeader>
-						<CardContent className='space-y-4'>
-							<div className='space-y-1'>
-								<Input
-									{...register('firstName')}
-									type='text'
-									placeholder='Digite seu nome'
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className='flex max-w-lg flex-1 flex-col gap-3'
+					>
+						<Card className='flex-1'>
+							<CardHeader>
+								<CardTitle>Crie a sua conta</CardTitle>
+								<CardDescription>Insira os seus dados abaixo</CardDescription>
+							</CardHeader>
+							<CardContent className='space-y-4'>
+								<FormField
+									control={form.control}
+									name='firstName'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Nome</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder='Digite seu nome'
+												/>
+											</FormControl>
+											<FormMessage className='text-xs' />
+										</FormItem>
+									)}
 								/>
-								{errors.firstName && (
-									<p className='text-destructive text-xs'>
-										{errors.firstName.message}
-									</p>
-								)}
-							</div>
 
-							<div className='space-y-1'>
-								<Input
-									{...register('lastName')}
-									type='text'
-									placeholder='Digite seu sobrenome'
+								<FormField
+									control={form.control}
+									name='lastName'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Sobrenome</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder='Digite seu sobrenome'
+												/>
+											</FormControl>
+											<FormMessage className='text-xs' />
+										</FormItem>
+									)}
 								/>
-								{errors.lastName && (
-									<p className='text-destructive text-xs'>
-										{errors.lastName.message}
-									</p>
-								)}
-							</div>
 
-							<div className='space-y-1'>
-								<Input
-									{...register('email')}
-									type='text'
-									placeholder='Digite seu e-mail'
+								<FormField
+									control={form.control}
+									name='email'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>E-mail</FormLabel>
+											<FormControl>
+												<Input
+													{...field}
+													placeholder='Digite seu e-mail'
+												/>
+											</FormControl>
+											<FormMessage className='text-xs' />
+										</FormItem>
+									)}
 								/>
-								{errors.email && (
-									<p className='text-destructive text-xs'>
-										{errors.email.message}
-									</p>
-								)}
-							</div>
 
-							<div className='space-y-1'>
-								<PasswordInput {...register('password')} />
-								{errors.password && (
-									<p className='text-destructive text-xs'>
-										{errors.password.message}
-									</p>
-								)}
-							</div>
-
-							<div className='space-y-1'>
-								<PasswordInput
-									{...register('confirmPassword')}
-									placeholder='Digite sua senha novamente'
+								<FormField
+									control={form.control}
+									name='password'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Senha</FormLabel>
+											<FormControl>
+												<PasswordInput
+													{...field}
+													placeholder='Digite sua senha'
+												/>
+											</FormControl>
+											<FormMessage className='text-xs' />
+										</FormItem>
+									)}
 								/>
-								{errors.confirmPassword && (
-									<p className='text-destructive text-xs'>
-										{errors.confirmPassword.message}
-									</p>
-								)}
-							</div>
 
-							<div className='space-y-1'>
-								<div className='items-top flex space-x-2'>
-									<Checkbox
-										id='terms'
-										onCheckedChange={(checked) =>
-											setValue('terms', checked === true)
-										}
-									/>
-									<div className='grid gap-1.5 leading-none'>
-										<label
-											htmlFor='terms'
-											className='text-muted-foreground text-xs opacity-75'
-										>
-											Ao clicar em "Criar conta", você aceita{' '}
-											<a
-												href='#'
-												className='text-white underline'
-											>
-												nossos termos de uso e política de privacidade
-											</a>
-										</label>
-									</div>
-								</div>
-								{errors.terms && (
-									<p className='text-destructive text-xs'>
-										{errors.terms.message}
-									</p>
-								)}
-							</div>
-						</CardContent>
-						<CardFooter>
-							<Button className='w-full'>
-								{isSubmitting ? 'Criando...' : 'Criar conta'}
+								<FormField
+									control={form.control}
+									name='confirmPassword'
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Confirmação de senha</FormLabel>
+											<FormControl>
+												<PasswordInput
+													{...field}
+													placeholder='Digite sua senha novamente'
+												/>
+											</FormControl>
+											<FormMessage className='text-xs' />
+										</FormItem>
+									)}
+								/>
+
+								<FormField
+									control={form.control}
+									name='terms'
+									render={({ field }) => (
+										<FormItem className='flex flex-row items-start space-y-0 space-x-3'>
+											<FormControl>
+												<Checkbox
+													checked={field.value}
+													onCheckedChange={field.onChange}
+												/>
+											</FormControl>
+											<div className='flex flex-1 flex-col space-y-1 leading-none'>
+												<FormLabel className='text-xs font-normal opacity-75'>
+													<p>
+														Ao clicar em "Criar conta", você aceita{' '}
+														<a
+															href='#'
+															className='text-white underline'
+														>
+															nossos termos de uso e política de privacidade
+														</a>
+													</p>
+												</FormLabel>
+												<FormMessage className='text-xs' />
+											</div>
+										</FormItem>
+									)}
+								/>
+							</CardContent>
+							<CardFooter>
+								<Button className='w-full'>
+									{form.formState.isSubmitting ? 'Criando...' : 'Criar conta'}
+								</Button>
+							</CardFooter>
+						</Card>
+
+						<div className='flex items-center justify-center'>
+							<p className='text-center opacity-50'>Já possui uma conta?</p>
+							<Button
+								variant='link'
+								asChild
+								className='-ml-3'
+							>
+								<Link to='/login'>Faça login</Link>
 							</Button>
-						</CardFooter>
-					</Card>
-
-					<div className='flex items-center justify-center'>
-						<p className='text-center opacity-50'>Já possui uma conta?</p>
-						<Button
-							variant='link'
-							asChild
-						>
-							<Link to='/login'>Faça login</Link>
-						</Button>
-					</div>
-				</form>
+						</div>
+					</form>
+				</Form>
 			</div>
 		</main>
 	);
