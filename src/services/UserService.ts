@@ -1,4 +1,5 @@
 import api from '@/config/api';
+import type { UserLoginType } from '@/types/UserLoginType';
 import type { UserRegisterType } from '@/types/UserRegisterType';
 
 export const UserService = {
@@ -15,6 +16,15 @@ export const UserService = {
 
 	async getMe() {
 		const response = await api.get('/users/me');
+		return response.data;
+	},
+
+	async login({ email, password }: UserLoginType) {
+		const response = await api.post('/users/login', {
+			email,
+			password,
+		});
+
 		return response.data;
 	},
 };

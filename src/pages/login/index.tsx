@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import PasswordInput from '@/components/common/password-input';
@@ -23,6 +24,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAuth } from '@/hooks/useAuth';
 
 const loginSchema = z.object({
 	email: z.email().trim(),
@@ -30,6 +32,10 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+	const { loginUser } = useAuth();
+
+	const navigate = useNavigate();
+
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
@@ -38,8 +44,19 @@ const Login = () => {
 		},
 	});
 
-	const onSubmit = (values: z.infer<typeof loginSchema>) => {
-		console.log(values);
+	const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+		try {
+			await loginUser({
+				email: values.email,
+				password: values.password,
+			});
+
+			toast.success('Login com sucesso.');
+
+			navigate('/');
+		} catch {
+			toast.error('Falha no login.');
+		}
 	};
 
 	return (
