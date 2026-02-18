@@ -2,7 +2,7 @@ import type React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import LoadingScreen from '@/components/common/LoadingScreen';
-import { ACCESS_TOKEN } from '@/constants/AuthStorage';
+import { ACCESS_TOKEN } from '@/constants/AuthStorageKeys';
 import { useUser } from '@/hooks/useUser';
 
 type Props = {

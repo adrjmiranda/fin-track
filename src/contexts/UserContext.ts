@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 
-import type { UserFromDbType } from '@/types/UserFromDbType';
+import type { AutenticatedUserFromDbType } from '@/types/AutenticatedAutenticatedUserFromDbType';
 
 type UserContextData = {
-	user: UserFromDbType | null;
+	user: AutenticatedUserFromDbType | null;
 	isPending: boolean;
 };
 

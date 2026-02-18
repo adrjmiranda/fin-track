@@ -2,20 +2,22 @@ import type React from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/AuthStorage';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/AuthStorageKeys';
 import { USER_ME } from '@/constants/UseQueriesKeys';
 import { AuthContext } from '@/contexts/AuthContext';
 import { useAuthMutations } from '@/hooks/useAuthMutations';
-import type { UserFromDbType } from '@/types/UserFromDbType';
+import type { AutenticatedAutenticatedUserFromDbType } from '@/types/AutenticatedUserFromDbType';
 import type { UserLoginType } from '@/types/UserLoginType';
 import type { UserRegisterType } from '@/types/UserRegisterType';
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const { signUpMutation, loginMutation } = useAuthMutations();
+	const { signUpMutation, signInMutation } = useAuthMutations();
 
 	const queryClient = useQueryClient();
 
-	const handleAuthSuccess = (response: UserFromDbType) => {
+	const handleAuthSuccess = (
+		response: AutenticatedAutenticatedUserFromDbType,
+	) => {
 		const accessToken = response?.tokens?.accessToken;
 		const refreshToken = response?.tokens?.refreshToken;
 
@@ -33,12 +35,20 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	};
 
 	const loginUser = async (data: UserLoginType) => {
-		const response = await loginMutation.mutateAsync(data);
+		const response = await signInMutation.mutateAsync(data);
 		handleAuthSuccess(response);
 	};
 
+	const logoutUser = () => {
+		localStorage.removeItem(ACCESS_TOKEN);
+		localStorage.removeItem(REFRESH_TOKEN);
+
+		queryClient.setQueryData([USER_ME], null);
+		queryClient.clear();
+	};
+
 	return (
-		<AuthContext.Provider value={{ registerUser, loginUser }}>
+		<AuthContext.Provider value={{ registerUser, loginUser, logoutUser }}>
 			{children}
 		</AuthContext.Provider>
 	);

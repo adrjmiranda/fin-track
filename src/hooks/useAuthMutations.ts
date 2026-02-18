@@ -14,13 +14,13 @@ export const useAuthMutations = () => {
 		mutationFn: (data: UserRegisterType) => UserService.create(data),
 	});
 
-	const loginMutation = useMutation({
+	const signInMutation = useMutation({
 		mutationKey: [USE_AUTH_LOGIN],
 		mutationFn: (data: UserLoginType) => UserService.login(data),
 	});
 
 	return {
 		signUpMutation,
-		loginMutation,
+		signInMutation,
 	};
 };

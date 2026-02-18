@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { ACCESS_TOKEN } from '@/constants/AuthStorage';
+import { ACCESS_TOKEN } from '@/constants/AuthStorageKeys';
 import { USER_ME } from '@/constants/UseQueriesKeys';
 import { UserService } from '@/services/UserService';
 
