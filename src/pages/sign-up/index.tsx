@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import * as z from 'zod';
 
-import PasswordInput from '@/components/common/password-input';
+import PasswordInput from '@/components/common/PasswordInput';
 import { Button } from '@/components/ui/button';
 import {
 	Card,
