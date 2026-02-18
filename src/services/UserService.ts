@@ -1,10 +1,10 @@
-import api from '@/config/api';
+import { protectedApi, publicApi } from '@/config/api';
 import type { UserLoginType } from '@/types/UserLoginType';
 import type { UserRegisterType } from '@/types/UserRegisterType';
 
 export const UserService = {
 	async create({ firstName, lastName, email, password }: UserRegisterType) {
-		const response = await api.post('/users', {
+		const response = await publicApi.post('/users', {
 			first_name: firstName,
 			last_name: lastName,
 			email,
@@ -15,12 +15,12 @@ export const UserService = {
 	},
 
 	async getMe() {
-		const response = await api.get('/users/me');
+		const response = await protectedApi.get('/users/me');
 		return response.data;
 	},
 
 	async login({ email, password }: UserLoginType) {
-		const response = await api.post('/users/login', {
+		const response = await publicApi.post('/users/login', {
 			email,
 			password,
 		});
