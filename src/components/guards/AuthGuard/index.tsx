@@ -1,6 +1,7 @@
 import type React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import LoadingScreen from '@/components/common/LoadingScreen';
 import { ACCESS_TOKEN } from '@/constants/AuthStorage';
 import { useUser } from '@/hooks/useUser';
 
@@ -21,7 +22,7 @@ const AuthGuard = ({ children }: Props) => {
 			/>
 		);
 
-	if (isPending) return <>Loading...</>;
+	if (isPending) return <LoadingScreen />;
 
 	if (!user) return <Navigate to='/login' />;
 

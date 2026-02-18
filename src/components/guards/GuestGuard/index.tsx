@@ -1,6 +1,7 @@
 import type React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
+import LoadingScreen from '@/components/common/LoadingScreen';
 import { ACCESS_TOKEN } from '@/constants/AuthStorage';
 import { useUser } from '@/hooks/useUser';
 
@@ -12,7 +13,7 @@ const GuestGuard = ({ children }: Props) => {
 	const { user, isPending } = useUser();
 	const hasAccessToken = !!localStorage.getItem(ACCESS_TOKEN);
 
-	if (isPending && hasAccessToken) return null;
+	if (isPending && hasAccessToken) return <LoadingScreen />;
 
 	if (user && hasAccessToken)
 		return (
