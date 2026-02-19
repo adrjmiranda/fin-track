@@ -22,7 +22,7 @@ This is a financial control project developed during the React module of the **F
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/adrjmiranda/fin-track.git](https://github.com/adrjmiranda/fin-track.git)
+    git clone https://github.com/adrjmiranda/fin-track.git
     ```
 2.  Install dependencies:
     ```bash
@@ -42,4 +42,4 @@ This project uses **Husky** and **Commitlint** to enforce Conventional Commits.
 
 ---
 
-Developed by [Adriano](https://github.com/adrjmiranda) during the Full-Stack Club journey.
+Developed by [Adriano Miranda](https://github.com/adrjmiranda) during the Full-Stack Club journey.
