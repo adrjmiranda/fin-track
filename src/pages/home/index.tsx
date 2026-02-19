@@ -1,9 +1,7 @@
-import { PlusIcon } from 'lucide-react';
-
+import AddTransactionButton from '@/components/common/AddTransactionButton';
 import Balance from '@/components/common/Balance';
 import DataSelection from '@/components/common/DataSelection';
 import Header from '@/components/common/Header/inde';
-import { Button } from '@/components/ui/button';
 
 const Home = () => {
 	return (
@@ -16,10 +14,7 @@ const Home = () => {
 
 					<div className='flex gap-2'>
 						<DataSelection />
-						<Button>
-							<PlusIcon />
-							Nova Transação
-						</Button>
+						<AddTransactionButton />
 					</div>
 				</div>
 				<Balance />

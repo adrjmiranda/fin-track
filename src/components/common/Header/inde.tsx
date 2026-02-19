@@ -55,12 +55,13 @@ const Header = () => {
 								<Avatar className='h-8 w-8'>
 									<AvatarImage src='https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg' />
 									<AvatarFallback>
-										{user.first_name.charAt(0).toUpperCase() +
-											user.last_name.charAt(0).toUpperCase()}
+										{user &&
+											user.first_name.charAt(0).toUpperCase() +
+												user.last_name.charAt(0).toUpperCase()}
 									</AvatarFallback>
 								</Avatar>
 								<p className='text-sm'>
-									{user.first_name} {user.last_name}
+									{user?.first_name} {user?.last_name}
 								</p>
 							</Button>
 						</DropdownMenuTrigger>

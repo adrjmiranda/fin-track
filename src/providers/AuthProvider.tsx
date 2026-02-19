@@ -6,7 +6,7 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/AuthStorageKeys';
 import { USER_ME } from '@/constants/UseQueriesKeys';
 import { AuthContext } from '@/contexts/AuthContext';
 import { useAuthMutations } from '@/hooks/useAuthMutations';
-import type { AutenticatedAutenticatedUserFromDbType } from '@/types/AutenticatedUserFromDbType';
+import type { AutenticatedUserFromDbType } from '@/types/AutenticatedUserFromDbType';
 import type { UserLoginType } from '@/types/UserLoginType';
 import type { UserRegisterType } from '@/types/UserRegisterType';
 
@@ -15,9 +15,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
 	const queryClient = useQueryClient();
 
-	const handleAuthSuccess = (
-		response: AutenticatedAutenticatedUserFromDbType,
-	) => {
+	const handleAuthSuccess = (response: AutenticatedUserFromDbType) => {
 		const accessToken = response?.tokens?.accessToken;
 		const refreshToken = response?.tokens?.refreshToken;
 

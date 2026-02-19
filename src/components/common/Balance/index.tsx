@@ -40,17 +40,21 @@ const Balance = () => {
 	);
 
 	return (
-		<div className='grid grid-cols-2 grid-rows-2 gap-6'>
-			{items.map((item, index) => (
-				<BalanceItem
-					key={index}
-					title={item.title}
-					value={item.value}
-					Icon={item.Icon}
-					balanceIsPending={balanceIsPending}
-					iconStyle={item.iconStyle}
-				/>
-			))}
+		<div className='grid grid-cols-5 gap-6'>
+			<div className='col-span-3 grid grid-cols-2 grid-rows-2 gap-6'>
+				{items.map((item, index) => (
+					<BalanceItem
+						key={index}
+						title={item.title}
+						value={item.value}
+						Icon={item.Icon}
+						balanceIsPending={balanceIsPending}
+						iconStyle={item.iconStyle}
+					/>
+				))}
+			</div>
+
+			<div></div>
 		</div>
 	);
 };
