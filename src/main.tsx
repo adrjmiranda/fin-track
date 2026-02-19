@@ -23,8 +23,8 @@ createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<AuthProvider>
-				<UserProvider>
-					<BrowserRouter>
+				<BrowserRouter>
+					<UserProvider>
 						<Routes>
 							<Route
 								path='/'
@@ -55,8 +55,8 @@ createRoot(document.getElementById('root')!).render(
 								/>
 							</Route>
 						</Routes>
-					</BrowserRouter>
-				</UserProvider>
+					</UserProvider>
+				</BrowserRouter>
 			</AuthProvider>
 		</QueryClientProvider>
 	</StrictMode>,

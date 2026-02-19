@@ -1,4 +1,4 @@
-export type AutenticatedAutenticatedUserFromDbType = {
+export type AutenticatedUserFromDbType = {
 	id: string;
 	firstName: string;
 	lastName: string;

@@ -27,4 +27,11 @@ export const UserService = {
 
 		return response.data;
 	},
+
+	async getBalance({ from, to }: { from: string; to: string }) {
+		const response = await protectedApi.get(
+			`/users/me/balance?from=${from}&to=${to}`,
+		);
+		return response.data;
+	},
 };

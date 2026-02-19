@@ -4,10 +4,12 @@ import { UserContext } from '@/contexts/UserContext';
 import { useUserQueries } from '@/hooks/useUserQueries';
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-	const { user, isPending } = useUserQueries();
+	const { user, isPending, balance, balanceIsPending } = useUserQueries();
 
 	return (
-		<UserContext.Provider value={{ user, isPending }}>
+		<UserContext.Provider
+			value={{ user, isPending, balance, balanceIsPending }}
+		>
 			{children}
 		</UserContext.Provider>
 	);
