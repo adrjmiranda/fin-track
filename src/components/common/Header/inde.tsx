@@ -47,7 +47,7 @@ const Header = () => {
 
 				<div>
 					<DropdownMenu>
-						<DropdownMenuTrigger>
+						<DropdownMenuTrigger asChild>
 							<Button
 								variant='outline'
 								className='flex cursor-pointer justify-between px-2 py-6'
