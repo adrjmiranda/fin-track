@@ -6,4 +6,11 @@ export const TransactionService = {
 		const response = await protectedApi.post(`/transactions/me`, data);
 		return response.data;
 	},
+
+	async getTransactions({ from, to }: { from: string; to: string }) {
+		const response = await protectedApi.get(
+			`/transactions/me/?from=${from}&to=${to}`,
+		);
+		return response.data;
+	},
 };

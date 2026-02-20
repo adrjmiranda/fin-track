@@ -35,6 +35,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { USER_TRANSACTIONS } from '@/constants/TransactionsQueriesKeys';
 import { USER_BALANCE } from '@/constants/UseQueriesKeys';
 import { useUser } from '@/hooks/commom/useUser';
 import { useTransactionMutations } from '@/hooks/mutations/useTransactionMutations';
@@ -73,6 +74,14 @@ const AddTransactionButton = () => {
 			queryClient.invalidateQueries({
 				queryKey: [
 					USER_BALANCE,
+					user?.id,
+					searchParams.get('from') ?? '',
+					searchParams.get('to') ?? '',
+				],
+			});
+			queryClient.invalidateQueries({
+				queryKey: [
+					USER_TRANSACTIONS,
 					user?.id,
 					searchParams.get('from') ?? '',
 					searchParams.get('to') ?? '',

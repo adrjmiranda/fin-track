@@ -2,6 +2,7 @@ import AddTransactionButton from '@/components/common/AddTransactionButton';
 import Balance from '@/components/common/Balance';
 import DataSelection from '@/components/common/DataSelection';
 import Header from '@/components/common/Header/inde';
+import TransactionsTable from '@/components/common/TransactionsTable';
 
 const Home = () => {
 	return (
@@ -18,6 +19,10 @@ const Home = () => {
 					</div>
 				</div>
 				<Balance />
+			</div>
+
+			<div className='space-y-4 p-8'>
+				<TransactionsTable />
 			</div>
 		</main>
 	);
