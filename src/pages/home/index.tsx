@@ -22,6 +22,7 @@ const Home = () => {
 			</div>
 
 			<div className='space-y-4 p-8'>
+				<h2 className='flex-1 font-bold'>Transações</h2>
 				<TransactionsTable />
 			</div>
 		</main>
