@@ -20,7 +20,7 @@ export const useUserQueries = () => {
 	});
 
 	const balanceQuery = useQuery({
-		queryKey: [USER_BALANCE, userQuery.data?.id?.id, from, to],
+		queryKey: [USER_BALANCE, userQuery.data?.id, from, to],
 		queryFn: () => UserService.getBalance({ from, to }),
 		staleTime: 1000 * 60 * 5,
 		enabled: !!localStorage.getItem(ACCESS_TOKEN),

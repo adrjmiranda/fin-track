@@ -1,8 +1,18 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NumericFormat } from 'react-number-format';
+import { useSearchParams } from 'react-router-dom';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { PiggyBank, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+	LoaderIcon,
+	PiggyBank,
+	PlusIcon,
+	TrendingDown,
+	TrendingUp,
+} from 'lucide-react';
+import { toast } from 'sonner';
 import * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
@@ -25,6 +35,9 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { USER_BALANCE } from '@/constants/UseQueriesKeys';
+import { useTransactionMutations } from '@/hooks/useTransactionMutations';
+import { useUser } from '@/hooks/useUser';
 
 import DateInput from '../DateInput';
 
@@ -36,6 +49,13 @@ const formSchema = z.object({
 });
 
 const AddTransactionButton = () => {
+	const { createTransactionMutation } = useTransactionMutations();
+	const queryClient = useQueryClient();
+	const { user } = useUser();
+	const [searchParams] = useSearchParams();
+
+	const [activeDialog, setActiveDialog] = useState<boolean>(false);
+
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -47,13 +67,38 @@ const AddTransactionButton = () => {
 		shouldUnregister: true,
 	});
 
-	const onSubmit = (values: z.infer<typeof formSchema>) => {
-		console.log(values);
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		try {
+			await createTransactionMutation.mutateAsync({
+				name: values.name,
+				type: values.type,
+				date: values.date.toISOString(),
+				amount: values.amount,
+			});
+
+			queryClient.invalidateQueries({
+				queryKey: [
+					USER_BALANCE,
+					user?.id,
+					searchParams.get('from') ?? '',
+					searchParams.get('to') ?? '',
+				],
+			});
+
+			setActiveDialog(false);
+
+			toast.success('Transação criada com sucesso');
+		} catch {
+			toast.error('Falha aot tentar criar transação');
+		}
 	};
 
 	return (
 		<>
-			<Dialog>
+			<Dialog
+				open={activeDialog}
+				onOpenChange={setActiveDialog}
+			>
 				<DialogTrigger asChild>
 					<Button>
 						<PlusIcon />
@@ -101,7 +146,7 @@ const AddTransactionButton = () => {
 												allowNegative={false}
 												customInput={Input}
 												{...field}
-												// onChange={() => {}}
+												onChange={() => {}}
 												onValueChange={(values) =>
 													field.onChange(values.floatValue)
 												}
@@ -182,6 +227,7 @@ const AddTransactionButton = () => {
 										type='reset'
 										variant='secondary'
 										className='w-full'
+										disabled={form.formState.isSubmitting}
 									>
 										Cancelar
 									</Button>
@@ -189,8 +235,13 @@ const AddTransactionButton = () => {
 								<Button
 									type='submit'
 									className='w-full'
+									disabled={form.formState.isSubmitting}
 								>
-									Adicionar
+									{form.formState.isSubmitting ? (
+										<LoaderIcon className='animate-spin' />
+									) : (
+										'Adicionar'
+									)}
 								</Button>
 							</DialogFooter>
 						</form>
