@@ -38,15 +38,9 @@ import { Input } from '@/components/ui/input';
 import { USER_BALANCE } from '@/constants/UseQueriesKeys';
 import { useUser } from '@/hooks/commom/useUser';
 import { useTransactionMutations } from '@/hooks/mutations/useTransactionMutations';
+import { createTransactionSchema } from '@/schemas/createTransactionSchema';
 
 import DateInput from '../DateInput';
-
-const formSchema = z.object({
-	name: z.string().min(1, 'Nome é obrigatório'),
-	amount: z.number().positive('Valor deve ser maior que 0'),
-	date: z.date(),
-	type: z.enum(['EARNING', 'EXPENSE', 'INVESTMENT']),
-});
 
 const AddTransactionButton = () => {
 	const { createTransactionMutation } = useTransactionMutations();
@@ -56,8 +50,8 @@ const AddTransactionButton = () => {
 
 	const [activeDialog, setActiveDialog] = useState<boolean>(false);
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof createTransactionSchema>>({
+		resolver: zodResolver(createTransactionSchema),
 		defaultValues: {
 			name: '',
 			amount: 0,
@@ -67,7 +61,7 @@ const AddTransactionButton = () => {
 		shouldUnregister: true,
 	});
 
-	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+	const onSubmit = async (values: z.infer<typeof createTransactionSchema>) => {
 		try {
 			await createTransactionMutation.mutateAsync({
 				name: values.name,

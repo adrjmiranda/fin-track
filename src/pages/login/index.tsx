@@ -25,26 +25,22 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/hooks/commom/useAuth';
-
-const loginSchema = z.object({
-	email: z.email().trim(),
-	password: z.string().min(6, 'Mínimo de 6 caracteres'),
-});
+import { signInSchema } from '@/schemas/signInSchema';
 
 const Login = () => {
 	const { loginUser } = useAuth();
 
 	const navigate = useNavigate();
 
-	const form = useForm<z.infer<typeof loginSchema>>({
-		resolver: zodResolver(loginSchema),
+	const form = useForm<z.infer<typeof signInSchema>>({
+		resolver: zodResolver(signInSchema),
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 	});
 
-	const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+	const onSubmit = async (values: z.infer<typeof signInSchema>) => {
 		try {
 			await loginUser({
 				email: values.email,
