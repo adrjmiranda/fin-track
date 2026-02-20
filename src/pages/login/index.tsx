@@ -24,7 +24,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/commom/useAuth';
 
 const loginSchema = z.object({
 	email: z.email().trim(),

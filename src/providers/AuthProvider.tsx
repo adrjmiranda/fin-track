@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/constants/AuthStorageKeys';
 import { USER_ME } from '@/constants/UseQueriesKeys';
 import { AuthContext } from '@/contexts/AuthContext';
-import { useAuthMutations } from '@/hooks/useAuthMutations';
+import { useAuthMutations } from '@/hooks/mutations/useAuthMutations';
 import type { AutenticatedUserFromDbType } from '@/types/AutenticatedUserFromDbType';
 import type { UserLoginType } from '@/types/UserLoginType';
 import type { UserRegisterType } from '@/types/UserRegisterType';

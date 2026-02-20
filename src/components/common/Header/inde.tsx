@@ -15,8 +15,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useAuth } from '@/hooks/useAuth';
-import { useUser } from '@/hooks/useUser';
+import { useAuth } from '@/hooks/commom/useAuth';
+import { useUser } from '@/hooks/commom/useUser';
 
 const Header = () => {
 	const { user } = useUser();

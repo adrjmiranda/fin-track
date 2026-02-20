@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import LoadingScreen from '@/components/common/LoadingScreen';
 import { ACCESS_TOKEN } from '@/constants/AuthStorageKeys';
-import { useUser } from '@/hooks/useUser';
+import { useUser } from '@/hooks/commom/useUser';
 
 type Props = {
 	children?: React.ReactNode;

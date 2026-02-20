@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { PiggyBank, TrendingDown, TrendingUp, WalletIcon } from 'lucide-react';
 
-import { useUser } from '@/hooks/useUser';
+import { useUser } from '@/hooks/commom/useUser';
 
 import BalanceItem from '../BalanceItem';
 
