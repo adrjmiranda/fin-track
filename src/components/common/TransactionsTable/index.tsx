@@ -1,19 +1,18 @@
 import type { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale/pt-BR';
-import { ExternalLinkIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTransactionsQueries } from '@/hooks/queries/useTransactionsQueries';
-import type { TransactionType } from '@/types/TransactionType';
+import type { TransactionFromDbType } from '@/types/TransactionFromDbType';
 import { formatCurrency } from '@/utils/format';
 
 import DataTable from '../DataTable';
+import EditTransactionButton from '../EditTransactionButton';
 import TransactionTableTypeLabel from '../TransactionTableTypeLabel';
 
-const columns: ColumnDef<TransactionType>[] = [
+const columns: ColumnDef<TransactionFromDbType>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Título',
@@ -37,18 +36,13 @@ const columns: ColumnDef<TransactionType>[] = [
 		accessorKey: 'amount',
 		header: 'Valor',
 		cell: ({ row: { original: transaction } }) =>
-			formatCurrency(transaction.amount),
+			formatCurrency(Number(transaction.amount)),
 	},
 	{
 		accessorKey: 'actions',
 		header: 'Ações',
-		cell: () => (
-			<Button
-				variant='ghost'
-				size='icon'
-			>
-				<ExternalLinkIcon className='text-muted-foreground' />
-			</Button>
+		cell: ({ row: { original: transaction } }) => (
+			<EditTransactionButton transaction={transaction} />
 		),
 	},
 ];

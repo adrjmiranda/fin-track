@@ -13,4 +13,9 @@ export const TransactionService = {
 		);
 		return response.data;
 	},
+
+	async update(id: string, data: TransactionType) {
+		const response = await protectedApi.patch(`/transactions/me/${id}`, data);
+		return response.data;
+	},
 };
